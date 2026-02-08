@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-sans text-gray-200 bg-surface-900 antialiased;
+    }
+}
+
+@layer components {
+    .admin-card {
+        @apply bg-surface-700 border border-surface-600 rounded-xl p-6;
+    }
+
+    .admin-btn {
+        @apply inline-flex items-center justify-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200 text-sm;
+    }
+
+    .admin-btn-danger {
+        @apply inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200 text-sm;
+    }
+
+    .admin-btn-secondary {
+        @apply inline-flex items-center justify-center px-4 py-2 bg-surface-600 hover:bg-surface-500 text-gray-200 font-medium rounded-lg transition-colors duration-200 text-sm border border-surface-500;
+    }
+
+    .admin-input {
+        @apply bg-surface-800 border border-surface-600 text-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary-600 focus:border-primary-600 placeholder-gray-500 w-full;
+    }
+
+    .admin-select {
+        @apply bg-surface-800 border border-surface-600 text-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary-600 focus:border-primary-600 w-full;
+    }
+
+    .admin-table {
+        @apply w-full text-sm text-left text-gray-300;
+    }
+
+    .admin-table thead {
+        @apply text-xs text-gray-400 uppercase bg-surface-800;
+    }
+
+    .admin-table th {
+        @apply px-6 py-3;
+    }
+
+    .admin-table td {
+        @apply px-6 py-4;
+    }
+
+    .admin-table tbody tr {
+        @apply border-b border-surface-600 hover:bg-surface-600/50 transition-colors;
+    }
+}

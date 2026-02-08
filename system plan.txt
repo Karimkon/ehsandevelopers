@@ -1,0 +1,198 @@
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+ Ehsan Developers - Website Implementation Plan
+
+ Context
+
+ Build a premium, world-class IT company website for Ehsan Developers at C:\xampp\htdocs\Ehsandevelopers. Fresh project, empty directory. The site must establish trust/authority, showcase
+  services, convert visitors to leads, and provide an admin dashboard for managing requests and content.
+
+ Tech Stack
+
+ - Backend: Laravel 12 + PHP 8.2
+ - Frontend: Blade + Tailwind CSS (Vite-compiled) + Alpine.js + GSAP animations
+ - Database: MySQL (ehsandevelopers)
+ - Auth: Laravel Breeze (Blade stack, admin-only — no public registration)
+ - Admin: Custom Blade admin panel (dark theme)
+
+ Color System
+ ┌────────────────────┬─────────────────────┬───────────────────┐
+ │        Role        │        Color        │        Hex        │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Primary (brand)    │ Emerald Green       │ #059669 / #047857 │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Secondary (accent) │ Gold/Amber          │ #D97706 / #F59E0B │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Supporting (tech)  │ Deep Teal           │ #0D9488 / #0F766E │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Background light   │ Off-white           │ #F8FAFC           │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Text               │ Charcoal/Dark Slate │ #1E293B / #334155 │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Dark mode bg       │ Deep green-black    │ #081210 / #0c1a14 │
+ ├────────────────────┼─────────────────────┼───────────────────┤
+ │ Dark mode cards    │ Deep green          │ #132a1f           │
+ └────────────────────┴─────────────────────┴───────────────────┘
+ Database Schema (10 tables)
+
+ 1. users — add role (enum: admin/super_admin), is_active
+ 2. service_categories — name, slug, icon, color, sort_order, is_active
+ 3. services — category_id FK, name, slug, short_description, description, icon, features (JSON), sort_order, is_active
+ 4. service_requests — reference_number (ED-YYYYMMDD-XXXX), service_id FK, name, email, phone, company, budget_range, timeline, project_description, attachments (JSON), status, priority,
+ admin_notes, quoted_amount
+ 5. contact_messages — name, email, phone, subject, message, inquiry_type, status, admin_response, responded_at
+ 6. page_contents — section, key, value, type, label (simple CMS key-value store with caching)
+ 7. settings — key, value, type, group (site-wide config)
+ 8. blog_posts — future-ready (migration only, no views in Phase 1)
+ 9. portfolio_items — future-ready (migration only, no views in Phase 1)
+ 10. activity_logs — admin audit trail
+
+ Public Site Architecture (Single-Page + Service Request)
+
+ Routes
+
+ - GET / — Home (all sections on one page)
+ - GET /request-service — Multi-step service request form
+ - POST /request-service — Submit request
+ - GET /request-service/confirmation/{ref} — Success page
+ - GET /get-quote — Alias to request form
+ - POST /contact — AJAX contact form submission
+ - GET /privacy-policy, GET /terms-of-service — Legal pages
+ - GET /sitemap.xml — XML sitemap
+
+ Home Page Sections (all in resources/views/site/sections/)
+
+ 1. Hero — Headline + subtitle + 3 CTAs + abstract tech visual, GSAP entrance timeline
+ 2. About — Vision, Mission, Values cards
+ 3. Services — 6 category cards (expandable) with ~24 services loaded from DB
+ 4. CTA Banner — Mid-page call-to-action
+ 5. How We Work — 7-step timeline (Discovery → Support)
+ 6. Why Choose Us — Value proposition cards with stat counters
+ 7. Contact — AJAX form (left) + company info (right)
+
+ Service Request Form (3-step Alpine.js wizard)
+
+ - Step 1: Select service category → service
+ - Step 2: Project description, budget range, timeline, file uploads
+ - Step 3: Name, email, phone, company, privacy checkbox → Submit
+ - On submit: creates record, auto-generates reference number, sends 2 emails (client confirmation + admin notification), redirects to confirmation page
+
+ Admin Panel Architecture
+
+ Routes (all under admin.* prefix, auth + role:admin,super_admin middleware)
+
+ - Dashboard — stats cards, recent requests/messages, monthly chart (Chart.js)
+ - Service Categories — full CRUD
+ - Services — full CRUD
+ - Service Requests — list (filterable/searchable), show (detail + status timeline + respond)
+ - Contact Messages — list, show, respond, archive
+ - Page Content — CMS: edit hero text, about text, etc. by section
+ - Settings — tabbed: General, Email, Social Media, SEO
+ - Activity Logs — audit trail viewer
+
+ Admin Layout
+
+ - Always dark theme for premium feel
+ - Collapsible sidebar with icon navigation
+ - Top bar with user info
+ - Flash message alerts
+
+ Frontend Architecture
+
+ Tailwind Config (tailwind.config.js)
+
+ - darkMode: 'class' strategy
+ - Custom color scales: primary (emerald), secondary (gold), teal, neutral, surface (dark mode)
+ - Fonts: Inter (body), Plus Jakarta Sans (display), JetBrains Mono (code)
+ - Custom animations: fade-in, slide-up, float, pulse-soft, gradient-shift
+ - Custom shadows: glow-primary, glow-secondary, premium
+ - Plugins: @tailwindcss/forms, @tailwindcss/typography
+
+ JavaScript (resources/js/)
+
+ - app.js — Alpine.js + GSAP + ScrollTrigger setup, imports all modules
+ - admin.js — Alpine.js for admin panel
+ - alpine/ — theme-toggle, mobile-nav, service-request-form, contact-form, admin/sidebar
+ - animations/ — scroll-reveals (data-attribute driven), hero entrance, counters, hover-effects (lift, icon-spin, magnetic buttons)
+
+ Dark/Light Theme
+
+ - Alpine.js darkMode boolean on <html> → toggles dark class
+ - localStorage persistence + system preference detection
+ - Flash-prevention <script> in <head> before CSS loads
+
+ Blade Component Library
+
+ - Site: nav, footer, section-heading, service-card, category-card, process-step, value-card, stat-counter, cta-button, theme-toggle
+ - Admin: sidebar, topbar, stat-card, status-badge, data-table, modal, alert
+ - Form: input, textarea, select, checkbox, file-upload
+
+ Email Notifications (4 Mailable classes)
+
+ 1. ServiceRequestReceived → client (confirmation with reference number)
+ 2. ServiceRequestNotification → admin (new request alert)
+ 3. ContactMessageNotification → admin (new contact message)
+ 4. ServiceRequestResponse → client (admin reply)
+
+ SEO
+
+ - Semantic HTML5 (<header>, <nav>, <main>, <section>, <footer>)
+ - Dynamic <title> and <meta> via partials/meta.blade.php
+ - Open Graph + Twitter Card meta tags
+ - JSON-LD structured data (Organization + OfferCatalog)
+ - XML sitemap, robots.txt
+ - Lazy loading images, proper heading hierarchy
+
+ ---
+ Implementation Order (24 Steps)
+
+ Phase 1A: Foundation (Steps 1-5)
+
+ 1. Create Laravel project — composer create-project, install Breeze (Blade), install gsap, @tailwindcss/typography
+ 2. Configure Tailwind + Vite — custom colors/fonts/animations, dual CSS/JS entry points, Google Fonts
+ 3. Database migrations + seeders — all 10 tables, seed categories (6), services (~24), admin user, default content, settings
+ 4. Middleware + Auth — RoleMiddleware, register in bootstrap/app.php, disable registration route, style login page
+ 5. Base layouts — public app.blade.php (dark mode support), admin admin.blade.php (always dark, sidebar), meta partials, structured data
+
+ Phase 1B: Public Site (Steps 6-11)
+
+ 6. Navigation + Footer — sticky navbar with theme toggle + mobile menu, 4-column footer
+ 7. Hero section — headline, subtitle, 3 CTAs, abstract visual, GSAP entrance animation
+ 8. About + Why Choose Us — vision/mission/values cards, value propositions grid, stat counters
+ 9. Services section — category cards from DB, expandable to show child services, "Request This Service" links
+ 10. How We Work — 7-step timeline with sequential scroll animation
+ 11. Contact section — AJAX form + company info, ContactController, email notification
+
+ Phase 1C: Service Request System (Steps 12-14)
+
+ 12. Multi-step form — 3-step Alpine.js wizard, file uploads, validation
+ 13. Email notifications — 2 mailable classes, branded templates, confirmation page
+ 14. Assemble home page — HomeController loads all data, View Composer for shared data, legal pages, sitemap
+
+ Phase 1D: Admin Panel (Steps 15-21)
+
+ 15. Dashboard — stat cards, recent items tables, Chart.js monthly chart
+ 16. Service request management — filterable list, detail view, status updates, respond to client
+ 17. Contact message management — list, show, respond, archive
+ 18. Service + Category CRUD — full CRUD with sortable, activate/deactivate
+ 19. Page Content CMS — edit sections (hero, about, etc.), cache clearing on save
+ 20. Settings — tabbed interface (General, Email, Social, SEO)
+ 21. Activity logs — logger service, admin action audit trail
+
+ Phase 1E: Polish (Steps 22-24)
+
+ 22. Animations finalization — verify all GSAP animations, respect prefers-reduced-motion
+ 23. Responsive + Accessibility — all breakpoints, ARIA labels, keyboard navigation, WCAG AA contrast
+ 24. Performance + Build — lazy loading, npm run build, test email, verify full flow
+
+ Verification
+
+ 1. Run php artisan serve and verify home page loads with all sections
+ 2. Toggle dark/light mode — verify all sections render correctly in both
+ 3. Submit service request form → verify email sent + confirmation page + DB record
+ 4. Submit contact form via AJAX → verify success message + DB record
+ 5. Login at /login → verify admin dashboard with stats
+ 6. CRUD test: create/edit/delete a service category and service
+ 7. Update service request status → verify activity log entry
+ 8. Edit page content in CMS → verify it reflects on the home page
+ 9. Test on mobile viewport (375px) → verify responsive navigation and layout
+ 10. Run npm run build → verify production assets compile without errors
