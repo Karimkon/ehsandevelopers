@@ -179,7 +179,7 @@
                                 <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">Phone</label>
                                 <input type="tel" x-model="form.phone"
                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-slate-700 dark:text-gray-200 focus:ring-2 focus:ring-primary-600 focus:border-primary-600"
-                                       placeholder="+1 (555) 123-4567">
+                                       placeholder="+256 707 208954">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">Company</label>

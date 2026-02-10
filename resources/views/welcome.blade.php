@@ -72,7 +72,7 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
 .portfolio-card:hover .p-overlay{opacity:1}
 @property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}
 .glow-border{position:relative}
-.glow-border::before{content:'';position:absolute;inset:-2px;border-radius:inherit;padding:2px;background:conic-gradient(from var(--angle),#059669,#d97706,#0d9488,#f59e0b,#059669);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rb 4s linear infinite;opacity:0;transition:opacity .4s}
+.glow-border::before{content:'';position:absolute;inset:-2px;border-radius:inherit;padding:2px;background:conic-gradient(from var(--angle),#059669,#d97706,#0d9488,#f59e0b,#059669);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rb 4s linear infinite;opacity:0;transition:opacity .4s;pointer-events:none}
 .glow-border:hover::before{opacity:1}
 @keyframes rb{to{--angle:360deg}}
 .tech-logo{transition:transform .3s,filter .3s;filter:grayscale(.5) opacity(.7)}
@@ -97,7 +97,7 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
 {{-- ═══════════════════════════════════════════════════════════════ --}}
 {{-- 1. HERO                                                        --}}
 {{-- ═══════════════════════════════════════════════════════════════ --}}
-<section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-50 via-primary-50/30 to-teal-50/20 dark:from-surface-900 dark:via-surface-900 dark:to-primary-950/50">
+<section id="hero" class="relative min-h-screen flex items-center pt-32 lg:pt-36 overflow-hidden bg-gradient-to-br from-slate-50 via-primary-50/30 to-teal-50/20 dark:from-surface-900 dark:via-surface-900 dark:to-primary-950/50">
     <canvas id="particle-canvas"></canvas>
     <!-- Orbs -->
     <div class="absolute top-20 left-10 w-72 h-72 bg-primary-400/20 dark:bg-primary-500/10 rounded-full blur-3xl float-slow"></div>
@@ -109,7 +109,7 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
     <div class="absolute top-[40%] right-[8%] w-6 h-6 bg-primary-500/30 dark:bg-primary-400/20 rounded rotate-45 float-slow hidden lg:block" style="animation-delay:-3s"></div>
     <div class="absolute top-[25%] left-[5%] w-12 h-12 border border-teal-300/25 dark:border-teal-500/15 rounded-full float-fast hidden lg:block" style="animation-delay:-4s"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 lg:pt-0 lg:pb-0 w-full">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 lg:pt-4 lg:pb-0 w-full">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div class="text-center lg:text-left">
                 <div class="inline-flex items-center gap-2 bg-primary-100/80 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm" data-hero-animate>
@@ -329,22 +329,22 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger" data-reveal>
             @php
             $services = [
-                ['Website Development','Custom websites, web applications, CMS platforms, and landing pages built with modern frameworks.','primary','M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9'],
-                ['Mobile App Development','Native & cross-platform mobile apps for iOS and Android using Flutter, React Native, Swift & Kotlin.','blue','M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'],
-                ['Custom Software','Enterprise software, SaaS platforms, workflow automation, and bespoke systems for your operations.','purple','M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'],
-                ['E-Commerce Solutions','Full-featured online stores with M-Pesa, Stripe, inventory management & analytics dashboards.','amber','M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z'],
-                ['Cloud & DevOps','AWS, Azure, Google Cloud deployment, CI/CD pipelines, Docker, Kubernetes & infrastructure automation.','cyan','M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z'],
-                ['UI/UX Design','User research, wireframing, prototyping & pixel-perfect interfaces that delight users.','pink','M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01'],
-                ['Cybersecurity','Security audits, vulnerability assessments, penetration testing, SSL & compliance solutions.','red','M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'],
-                ['IT Consulting','Digital transformation strategy, technology audits, system architecture & expert advisory.','indigo','M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
-                ['API Development','RESTful & GraphQL APIs, third-party integrations, payment gateways & microservices architecture.','orange','M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
-                ['Digital Marketing & SEO','Search engine optimization, social media marketing, content strategy & analytics-driven campaigns.','emerald','M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z'],
-                ['AI & Machine Learning','Chatbots, predictive analytics, recommendation engines, NLP & intelligent automation.','violet','M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
-                ['Database & Infrastructure','Database design, optimization, migration, server management & scalable infrastructure.','teal','M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4'],
+                ['Website Development','Custom websites, web applications, CMS platforms, and landing pages built with modern frameworks.','primary','M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9','website-development'],
+                ['Mobile App Development','Native & cross-platform mobile apps for iOS and Android using Flutter, React Native, Swift & Kotlin.','blue','M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z','mobile-app-development'],
+                ['Custom Software','Enterprise software, SaaS platforms, workflow automation, and bespoke systems for your operations.','purple','M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4','custom-software'],
+                ['E-Commerce Solutions','Full-featured online stores with M-Pesa, Stripe, inventory management & analytics dashboards.','amber','M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z','e-commerce-solutions'],
+                ['Cloud & DevOps','AWS, Azure, Google Cloud deployment, CI/CD pipelines, Docker, Kubernetes & infrastructure automation.','cyan','M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z','cloud-devops'],
+                ['UI/UX Design','User research, wireframing, prototyping & pixel-perfect interfaces that delight users.','pink','M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01','ui-ux-design'],
+                ['Cybersecurity','Security audits, vulnerability assessments, penetration testing, SSL & compliance solutions.','red','M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z','cybersecurity'],
+                ['IT Consulting','Digital transformation strategy, technology audits, system architecture & expert advisory.','indigo','M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z','it-consulting'],
+                ['API Development','RESTful & GraphQL APIs, third-party integrations, payment gateways & microservices architecture.','orange','M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z','api-development'],
+                ['Digital Marketing & SEO','Search engine optimization, social media marketing, content strategy & analytics-driven campaigns.','emerald','M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z','digital-marketing-seo'],
+                ['AI & Machine Learning','Chatbots, predictive analytics, recommendation engines, NLP & intelligent automation.','violet','M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z','ai-machine-learning'],
+                ['Database & Infrastructure','Database design, optimization, migration, server management & scalable infrastructure.','teal','M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4','database-infrastructure'],
             ];
             @endphp
             @foreach($services as $s)
-            <div class="service-card glass-card p-6 rounded-2xl group glow-border cursor-pointer">
+            <a href="/services/{{ $s[4] }}" class="service-card glass-card p-6 rounded-2xl group glow-border cursor-pointer block">
                 <div class="s-icon w-14 h-14 bg-{{ $s[2] }}-100 dark:bg-{{ $s[2] }}-900/40 rounded-xl flex items-center justify-center mb-5 transition-all duration-300">
                     <svg class="w-7 h-7 text-{{ $s[2] }}-600 dark:text-{{ $s[2] }}-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="{{ $s[3] }}"/></svg>
                 </div>
@@ -353,7 +353,7 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
                 <div class="flex items-center text-primary-600 dark:text-primary-400 text-sm font-semibold">
                     Learn more <svg class="w-4 h-4 ml-1 s-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
         <div class="text-center mt-12" data-reveal>
@@ -548,7 +548,7 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
 {{-- ═══════════════════════════════════════════════════════════════ --}}
 {{-- 9. PORTFOLIO                                                   --}}
 {{-- ═══════════════════════════════════════════════════════════════ --}}
-<section class="section-padding bg-slate-50 dark:bg-surface-800 relative overflow-hidden">
+<section id="portfolio" class="section-padding bg-slate-50 dark:bg-surface-800 relative overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <div class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 text-sm font-semibold uppercase tracking-wider mb-4" data-reveal>
@@ -561,54 +561,55 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
                 A showcase of our recent work across different industries and technologies.
             </p>
         </div>
+        @php $projects = \App\Models\PortfolioItem::orderBy('sort_order')->limit(6)->get(); @endphp
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 stagger" data-reveal>
-            @php
-            $projects = [
-                ['E-Commerce Platform','A full-featured multi-vendor marketplace with M-Pesa integration, real-time inventory, and analytics dashboard.','E-Commerce','Laravel, Vue.js, MySQL','from-primary-600 to-teal-600'],
-                ['Healthcare App','Cross-platform mobile application for telemedicine appointments, prescriptions, and patient records management.','Mobile App','Flutter, Firebase, Node.js','from-blue-600 to-cyan-600'],
-                ['Logistics Dashboard','Real-time fleet tracking and route optimization system with live maps, driver management, and reporting.','Web App','React, Python, AWS','from-purple-600 to-pink-600'],
-                ['Banking Portal','Secure internet banking solution with multi-factor authentication, transaction management, and loan applications.','FinTech','Laravel, React, PostgreSQL','from-secondary-600 to-orange-600'],
-                ['Restaurant Chain','POS system with online ordering, kitchen display, delivery tracking, and franchise management for 50+ locations.','SaaS','Next.js, Node.js, MongoDB','from-red-600 to-rose-600'],
-                ['EdTech Platform','Learning management system with live classes, quizzes, certificates, and student analytics for a university.','EdTech','Laravel, Vue.js, Docker','from-teal-600 to-emerald-600'],
-            ];
-            @endphp
-            @foreach($projects as $p)
+            @forelse($projects as $p)
             <div class="portfolio-card group rounded-2xl overflow-hidden bg-white dark:bg-surface-700 shadow-lg border border-gray-100 dark:border-surface-600 hover:shadow-xl transition-shadow">
-                <div class="aspect-video bg-gradient-to-br {{ $p[4] }} relative overflow-hidden">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <span class="text-white/20 text-6xl font-display font-bold">{{ substr($p[0],0,1) }}</span>
+                <div class="aspect-video relative overflow-hidden">
+                    @if($p->featured_image)
+                    <img src="{{ asset('storage/' . $p->featured_image) }}" alt="{{ $p->title }}" class="w-full h-full object-cover">
+                    @else
+                    <div class="w-full h-full bg-gradient-to-br from-primary-600 to-teal-600">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-white/20 text-6xl font-display font-bold">{{ substr($p->title,0,1) }}</span>
+                        </div>
+                        <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:20px 20px"></div>
                     </div>
-                    <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:20px 20px"></div>
+                    @endif
                     <div class="p-overlay absolute inset-0 bg-black/60 flex items-center justify-center">
-                        <a href="{{ url('/request-service') }}" class="btn-primary text-sm px-6 py-2.5">View Details</a>
+                        <a href="{{ url('/portfolio/' . $p->slug) }}" class="btn-primary text-sm px-6 py-2.5">View Details</a>
                     </div>
                 </div>
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-full">{{ $p[2] }}</span>
+                        <span class="text-xs font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-full">{{ $p->category->name ?? 'Project' }}</span>
                     </div>
-                    <h3 class="text-lg font-display font-bold text-slate-800 dark:text-white mb-2">{{ $p[0] }}</h3>
-                    <p class="text-sm text-slate-500 dark:text-gray-400 mb-3 leading-relaxed">{{ $p[1] }}</p>
-                    <div class="text-xs text-slate-400 dark:text-gray-500 font-mono">{{ $p[3] }}</div>
+                    <h3 class="text-lg font-display font-bold text-slate-800 dark:text-white mb-2">{{ $p->title }}</h3>
+                    <p class="text-sm text-slate-500 dark:text-gray-400 mb-3 leading-relaxed">{{ Str::limit($p->description, 120) }}</p>
+                    <div class="text-xs text-slate-400 dark:text-gray-500 font-mono">{{ is_array($p->technologies) ? implode(', ', $p->technologies) : $p->technologies }}</div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="sm:col-span-2 lg:col-span-3 text-center py-12">
+                <p class="text-slate-500 dark:text-gray-500">Portfolio projects coming soon.</p>
+            </div>
+            @endforelse
         </div>
     </div>
 </section>
 
 {{-- ═══════════════════════════════════════════════════════════════ --}}
-{{-- 10. TESTIMONIALS                                               --}}
+{{-- 10. PRICING                                                    --}}
 {{-- ═══════════════════════════════════════════════════════════════ --}}
 <section class="section-padding bg-white dark:bg-surface-900 relative overflow-hidden">
     <div class="absolute top-0 left-0 w-96 h-96 bg-secondary-100/30 dark:bg-secondary-900/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
     <div class="max-w-7xl mx-auto relative z-10">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <div class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 text-sm font-semibold uppercase tracking-wider mb-4" data-reveal>
-                <span class="w-8 h-[2px] bg-primary-500"></span> Testimonials <span class="w-8 h-[2px] bg-primary-500"></span>
+                <span class="w-8 h-[2px] bg-primary-500"></span> Pricing <span class="w-8 h-[2px] bg-primary-500"></span>
             </div>
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-slate-900 dark:text-white mb-6" data-reveal>
-                What Our <span class="gradient-text">Clients Say</span>
+                Transparent <span class="gradient-text">Pricing Plans</span>
             </h2>
         </div>
         @php

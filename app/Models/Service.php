@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
@@ -18,5 +19,21 @@ class Service extends Model
     public function category()
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($service) {
+            if (empty($service->slug)) {
+                $service->slug = Str::slug($service->name);
+            }
+        });
     }
 }

@@ -1,4 +1,21 @@
-<header x-data="{ mobileOpen: false, isDark: document.documentElement.classList.contains('dark') }" class="fixed top-0 inset-x-0 z-50 bg-white/90 dark:bg-surface-900/90 backdrop-blur-xl border-b border-gray-200/50 dark:border-surface-700 transition-colors duration-300">
+<header x-data="{
+    mobileOpen: false,
+    isDark: document.documentElement.classList.contains('dark'),
+    hidden: false,
+    lastY: 0,
+    init() {
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            if (y > 80 && y > this.lastY) {
+                this.hidden = true;
+                this.mobileOpen = false;
+            } else {
+                this.hidden = false;
+            }
+            this.lastY = y;
+        }, { passive: true });
+    }
+}" :class="hidden ? '-translate-y-full' : 'translate-y-0'" class="fixed top-0 inset-x-0 z-50 bg-white/90 dark:bg-surface-900/90 backdrop-blur-xl border-b border-gray-200/50 dark:border-surface-700 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
             <!-- Logo -->
@@ -15,6 +32,7 @@
                 <a href="{{ url('/#about') }}" class="text-sm font-medium text-slate-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About</a>
                 <a href="{{ url('/#services') }}" class="text-sm font-medium text-slate-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Services</a>
                 <a href="{{ url('/#process') }}" class="text-sm font-medium text-slate-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">How We Work</a>
+                <a href="{{ url('/#portfolio') }}" class="text-sm font-medium text-slate-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Portfolio</a>
                 <a href="{{ url('/blog') }}" class="text-sm font-medium text-slate-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Blog</a>
                 <a href="{{ url('/#contact') }}" class="text-sm font-medium text-slate-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Contact</a>
             </nav>
@@ -58,6 +76,7 @@
                 <a @click="mobileOpen = false" href="{{ url('/#about') }}" class="block px-4 py-2 text-slate-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">About</a>
                 <a @click="mobileOpen = false" href="{{ url('/#services') }}" class="block px-4 py-2 text-slate-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">Services</a>
                 <a @click="mobileOpen = false" href="{{ url('/#process') }}" class="block px-4 py-2 text-slate-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">How We Work</a>
+                <a @click="mobileOpen = false" href="{{ url('/#portfolio') }}" class="block px-4 py-2 text-slate-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">Portfolio</a>
                 <a @click="mobileOpen = false" href="{{ url('/blog') }}" class="block px-4 py-2 text-slate-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">Blog</a>
                 <a @click="mobileOpen = false" href="{{ url('/#contact') }}" class="block px-4 py-2 text-slate-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">Contact</a>
                 @auth

@@ -8,11 +8,14 @@ use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestCo
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\ServiceController as PublicServiceController;
 use App\Http\Controllers\Admin\PageContentController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
 use App\Http\Controllers\BlogController as PublicBlogController;
+use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -24,6 +27,10 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 Route::get('/blog', [PublicBlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{blog}', [PublicBlogController::class, 'show'])->name('blog.show');
+
+Route::get('/portfolio/{portfolio}', [PortfolioController::class, 'show'])->name('portfolio.show');
+
+Route::get('/services/{service}', [PublicServiceController::class, 'show'])->name('services.show');
 
 Route::get('/request-service', [ServiceRequestController::class, 'create'])->name('service-request.create');
 Route::post('/request-service', [ServiceRequestController::class, 'store'])->name('service-request.store');
@@ -56,6 +63,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Blog Posts
     Route::resource('blog', BlogController::class);
+
+    // Portfolio
+    Route::resource('portfolio', AdminPortfolioController::class);
 
     // Activity Logs
     Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
