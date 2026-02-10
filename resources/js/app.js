@@ -11,8 +11,7 @@ window.ScrollTrigger = ScrollTrigger;
 
 // Theme toggle component
 Alpine.data('themeToggle', () => ({
-    dark: localStorage.getItem('theme') === 'dark' ||
-          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+    dark: localStorage.getItem('theme') === 'dark',
     init() {
         this.$watch('dark', val => {
             localStorage.setItem('theme', val ? 'dark' : 'light');

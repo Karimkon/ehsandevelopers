@@ -3,9 +3,20 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-// Admin sidebar component
+// Admin layout component (responsive sidebar)
+Alpine.data('adminLayout', () => ({
+    collapsed: localStorage.getItem('admin_sidebar_collapsed') === 'true',
+    mobileOpen: false,
+    toggle() {
+        this.collapsed = !this.collapsed;
+        localStorage.setItem('admin_sidebar_collapsed', this.collapsed);
+    }
+}));
+
+// Backward compat alias
 Alpine.data('adminSidebar', () => ({
     collapsed: localStorage.getItem('admin_sidebar_collapsed') === 'true',
+    mobileOpen: false,
     toggle() {
         this.collapsed = !this.collapsed;
         localStorage.setItem('admin_sidebar_collapsed', this.collapsed);
