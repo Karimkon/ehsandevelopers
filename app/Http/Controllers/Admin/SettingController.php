@@ -25,14 +25,32 @@ class SettingController extends Controller
             'settings' => 'required|array',
             'settings.*.key' => 'required|string|exists:settings,key',
             'settings.*.value' => 'nullable|string|max:10000',
+            'settings.*.file' => 'nullable|image|max:2048',
         ]);
 
         $updatedCount = 0;
 
-        foreach ($validated['settings'] as $item) {
+        foreach ($validated['settings'] as $idx => $item) {
             $setting = Setting::where('key', $item['key'])->first();
+            if (!$setting) continue;
 
-            if ($setting && $setting->value !== ($item['value'] ?? '')) {
+            // Handle file uploads for image-type settings
+            if ($request->hasFile("settings.{$idx}.file")) {
+                $path = $request->file("settings.{$idx}.file")->store('settings', 'public');
+                $oldValue = $setting->value;
+                Setting::set($item['key'], $path);
+                $updatedCount++;
+
+                ActivityLog::log(
+                    'updated',
+                    "Updated setting [{$item['key']}]",
+                    $setting,
+                    ['old_value' => $oldValue, 'new_value' => $path]
+                );
+                continue;
+            }
+
+            if ($setting->value !== ($item['value'] ?? '')) {
                 $oldValue = $setting->value;
                 Setting::set($item['key'], $item['value'] ?? '');
                 $updatedCount++;

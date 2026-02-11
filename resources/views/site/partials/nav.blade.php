@@ -20,7 +20,7 @@
         <div class="flex items-center justify-between h-16 lg:h-20">
             <!-- Logo -->
             <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <img src="{{ asset('images/ehsandeveloperslogo.jpeg') }}" alt="Ehsan Developers" class="w-10 h-10 rounded-xl object-cover shadow-glow-primary">
+                <img src="{{ asset('images/ehsandeveloperslogo.jpeg') }}" alt="Ehsan Developers" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-500/30 shadow-lg">
                 <div>
                     <span class="text-xl font-display font-bold text-slate-800 dark:text-white">Ehsan</span>
                     <span class="text-xl font-display font-bold text-primary-600"> Developers</span>

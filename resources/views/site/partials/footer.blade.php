@@ -45,6 +45,7 @@
                     <li><a href="{{ url('/#process') }}" class="hover:text-primary-400 transition-colors">How We Work</a></li>
                     <li><a href="{{ url('/blog') }}" class="hover:text-primary-400 transition-colors">Blog</a></li>
                     <li><a href="{{ url('/#contact') }}" class="hover:text-primary-400 transition-colors">Contact</a></li>
+                    <li><a href="{{ url('/faq') }}" class="hover:text-primary-400 transition-colors">FAQ</a></li>
                     <li><a href="{{ url('/privacy-policy') }}" class="hover:text-primary-400 transition-colors">Privacy Policy</a></li>
                     <li><a href="{{ url('/terms-of-service') }}" class="hover:text-primary-400 transition-colors">Terms of Service</a></li>
                 </ul>
@@ -64,7 +65,7 @@
                     </li>
                     <li class="flex items-start gap-3">
                         <svg class="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <span>{{ \App\Models\PageContent::getValue('contact', 'address', '123 Innovation Drive') }}</span>
+                        <span>{{ \App\Models\PageContent::getValue('contact', 'address', 'Nairobi, Kenya') }}</span>
                     </li>
                 </ul>
             </div>

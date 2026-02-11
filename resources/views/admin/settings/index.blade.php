@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.settings.update') }}" method="POST">
+    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -32,7 +32,21 @@
 
                             <input type="hidden" name="settings[{{ $idx }}][key]" value="{{ $setting->key }}">
 
-                            @if($setting->type === 'textarea')
+                            @if($setting->type === 'image')
+                                @if($setting->value)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $setting->value) }}" alt="" class="w-48 h-32 object-cover rounded-lg">
+                                </div>
+                                @endif
+                                <input
+                                    type="file"
+                                    id="setting-{{ $idx }}"
+                                    name="settings[{{ $idx }}][file]"
+                                    accept="image/*"
+                                    class="admin-input w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-primary-600 file:text-white hover:file:bg-primary-700"
+                                >
+                                <input type="hidden" name="settings[{{ $idx }}][value]" value="{{ $setting->value }}">
+                            @elseif($setting->type === 'textarea')
                                 <textarea
                                     id="setting-{{ $idx }}"
                                     name="settings[{{ $idx }}][value]"

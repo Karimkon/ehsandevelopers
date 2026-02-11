@@ -216,21 +216,20 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
         <div class="text-center mb-10" data-reveal>
             <p class="text-sm font-semibold text-slate-400 dark:text-gray-600 uppercase tracking-widest">Trusted by businesses across East Africa</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center" data-reveal>
-            @foreach([
-                ['TechMart','Retail & E-Commerce'],
-                ['HealthConnect','Telemedicine'],
-                ['LogiFlow','Logistics'],
-                ['SafariPay','FinTech'],
-                ['EduVerse','EdTech'],
-                ['GreenFarm','AgriTech'],
-            ] as $client)
-            <div class="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-surface-800 transition-colors group cursor-default">
-                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-100 to-teal-100 dark:from-primary-900/40 dark:to-teal-900/40 flex items-center justify-center group-hover:shadow-glow-primary transition-shadow">
-                    <span class="text-xl font-display font-bold gradient-text">{{ substr($client[0],0,2) }}</span>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-start" data-reveal>
+            @foreach(\App\Models\TrustedClient::active()->orderBy('sort_order')->get() as $client)
+            <div class="flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-surface-800 transition-colors group cursor-default">
+                <div class="w-20 h-20 rounded-full bg-white dark:bg-surface-700 ring-1 ring-slate-200 dark:ring-surface-600 flex items-center justify-center overflow-hidden group-hover:ring-primary-300 dark:group-hover:ring-primary-700 group-hover:shadow-lg transition-all duration-300">
+                    @if($client->logo)
+                    <img src="{{ asset('storage/' . $client->logo) }}" alt="{{ $client->name }}" class="w-14 h-14 object-contain">
+                    @else
+                    <span class="text-xl font-display font-bold text-slate-400 dark:text-gray-500">{{ strtoupper(substr($client->name, 0, 2)) }}</span>
+                    @endif
                 </div>
-                <span class="text-xs font-semibold text-slate-600 dark:text-gray-400">{{ $client[0] }}</span>
-                <span class="text-[10px] text-slate-400 dark:text-gray-600">{{ $client[1] }}</span>
+                <div class="text-center">
+                    <span class="text-xs font-semibold text-slate-700 dark:text-gray-300 block">{{ $client->name }}</span>
+                    <span class="text-[10px] text-slate-400 dark:text-gray-600">{{ $client->industry }}</span>
+                </div>
             </div>
             @endforeach
         </div>
@@ -261,15 +260,133 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
     <div class="max-w-7xl mx-auto relative z-10">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div class="relative" data-reveal>
-                <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-primary-600 via-teal-600 to-primary-800 shadow-premium relative">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <img src="{{ asset('images/ehsandeveloperslogo.jpeg') }}" alt="Ehsan Developers" class="w-32 h-32 rounded-2xl object-cover shadow-2xl">
+                {{-- IDE / Code Editor Mockup --}}
+                <div class="rounded-2xl overflow-hidden shadow-premium bg-[#1e1e2e] border border-slate-700/50">
+                    {{-- Title bar --}}
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-[#181825] border-b border-slate-700/50">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-amber-400/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-emerald-400/80"></div>
+                        </div>
+                        <div class="flex items-center gap-1 text-[10px] text-slate-500 font-mono">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            app.dart — Ehsan Developers
+                        </div>
+                        <div class="w-16"></div>
                     </div>
-                    <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:24px 24px"></div>
+
+                    {{-- Tab bar --}}
+                    <div class="flex bg-[#181825] border-b border-slate-700/30 overflow-x-auto">
+                        <div class="flex items-center gap-2 px-4 py-1.5 bg-[#1e1e2e] border-r border-slate-700/30 text-[10px] text-emerald-400 font-mono whitespace-nowrap">
+                            <svg class="w-3 h-3 text-cyan-400" fill="currentColor" viewBox="0 0 24 24"><path d="M14.23 12.004a2.236 2.236 0 01-2.235 2.236 2.236 2.236 0 01-2.236-2.236 2.236 2.236 0 012.235-2.236 2.236 2.236 0 012.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.31 0-.593.063-.84.188C5.04 2.15 4.5 3.54 4.5 5.672c0 2.058.738 4.473 2.072 6.856C7.906 14.91 9.694 17.065 12 18.85c2.306-1.785 4.094-3.94 5.428-6.322C18.762 10.145 19.5 7.73 19.5 5.672c0-2.132-.54-3.522-1.763-4.15a2.06 2.06 0 00-.84-.188z"/></svg>
+                            app.dart
+                        </div>
+                        <div class="flex items-center gap-2 px-4 py-1.5 text-[10px] text-slate-500 font-mono whitespace-nowrap">
+                            <svg class="w-3 h-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+                            api.php
+                        </div>
+                        <div class="flex items-center gap-2 px-4 py-1.5 text-[10px] text-slate-500 font-mono whitespace-nowrap">
+                            <svg class="w-3 h-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7z"/></svg>
+                            schema.sql
+                        </div>
+                    </div>
+
+                    {{-- Code area with line numbers --}}
+                    <div class="flex">
+                        {{-- Line numbers --}}
+                        <div class="py-4 pl-4 pr-3 text-right select-none border-r border-slate-700/30">
+                            @for($ln = 1; $ln <= 18; $ln++)
+                            <div class="text-[11px] leading-5 font-mono {{ $ln === 8 ? 'text-emerald-400' : 'text-slate-600' }}">{{ $ln }}</div>
+                            @endfor
+                        </div>
+
+                        {{-- Code content --}}
+                        <div class="py-4 pl-4 pr-6 overflow-hidden flex-1 relative">
+                            {{-- Active line highlight --}}
+                            <div class="absolute left-0 right-0 h-5 bg-slate-700/20" style="top:calc(1rem + 7 * 1.25rem)"></div>
+
+                            <pre class="text-[11px] leading-5 font-mono"><code><span class="text-violet-400">import</span> <span class="text-amber-300">'package:flutter/material.dart'</span>;
+<span class="text-violet-400">import</span> <span class="text-amber-300">'package:ehsan/services/api.dart'</span>;
+
+<span class="text-slate-500">/// Ehsan Developers — Building Digital Excellence</span>
+<span class="text-cyan-400">class</span> <span class="text-emerald-400">EhsanApp</span> <span class="text-cyan-400">extends</span> <span class="text-emerald-400">StatelessWidget</span> {
+  <span class="text-slate-500">@override</span>
+  <span class="text-emerald-400">Widget</span> <span class="text-cyan-300">build</span>(<span class="text-emerald-400">BuildContext</span> <span class="text-orange-300">context</span>) {
+    <span class="text-violet-400">return</span> <span class="text-emerald-400">MaterialApp</span>(<span class="typing-cursor"></span>
+      <span class="text-orange-300">title</span>: <span class="text-amber-300">'Ehsan Developers'</span>,
+      <span class="text-orange-300">theme</span>: <span class="text-emerald-400">ThemeData</span>(
+        <span class="text-orange-300">primarySwatch</span>: <span class="text-emerald-400">Colors</span>.<span class="text-cyan-300">teal</span>,
+        <span class="text-orange-300">fontFamily</span>: <span class="text-amber-300">'Inter'</span>,
+      ),
+      <span class="text-orange-300">home</span>: <span class="text-emerald-400">DashboardScreen</span>(),
+      <span class="text-orange-300">debugShowCheckedModeBanner</span>: <span class="text-violet-400">false</span>,
+    );
+  }
+}</code></pre>
+
+                            {{-- Minimap (right side decoration) --}}
+                            <div class="absolute top-4 right-2 w-8 space-y-0.5 opacity-30">
+                                <div class="h-0.5 bg-violet-400 rounded w-4"></div>
+                                <div class="h-0.5 bg-amber-300 rounded w-7"></div>
+                                <div class="h-0.5 bg-slate-500 rounded w-3"></div>
+                                <div class="h-0.5 bg-slate-500 rounded w-5"></div>
+                                <div class="h-0.5 bg-cyan-400 rounded w-6"></div>
+                                <div class="h-0.5 bg-emerald-400 rounded w-7"></div>
+                                <div class="h-0.5 bg-slate-500 rounded w-2"></div>
+                                <div class="h-0.5 bg-violet-400 rounded w-5"></div>
+                                <div class="h-0.5 bg-orange-300 rounded w-6"></div>
+                                <div class="h-0.5 bg-amber-300 rounded w-7"></div>
+                                <div class="h-0.5 bg-orange-300 rounded w-4"></div>
+                                <div class="h-0.5 bg-emerald-400 rounded w-5"></div>
+                                <div class="h-0.5 bg-amber-300 rounded w-3"></div>
+                                <div class="h-0.5 bg-orange-300 rounded w-6"></div>
+                                <div class="h-0.5 bg-violet-400 rounded w-4"></div>
+                                <div class="h-0.5 bg-slate-500 rounded w-2"></div>
+                                <div class="h-0.5 bg-emerald-400 rounded w-5"></div>
+                                <div class="h-0.5 bg-slate-500 rounded w-3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Status bar --}}
+                    <div class="flex items-center justify-between px-4 py-1 bg-primary-700 text-[9px] text-white/80 font-mono">
+                        <div class="flex items-center gap-3">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                main
+                            </span>
+                            <span>Dart</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span>Ln 8, Col 32</span>
+                            <span>UTF-8</span>
+                            <span class="flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Connected
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div class="absolute -bottom-6 -right-6 bg-white dark:bg-surface-700 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-surface-600">
-                    <div class="text-4xl font-display font-bold gradient-text">5+</div>
-                    <div class="text-sm text-slate-600 dark:text-gray-400 font-medium">Years of<br>Excellence</div>
+
+                {{-- Terminal floating card --}}
+                <div class="absolute -bottom-4 -left-4 bg-[#1e1e2e] rounded-xl p-3 shadow-2xl border border-slate-700/50 max-w-[220px] z-10">
+                    <div class="flex items-center gap-1.5 mb-2">
+                        <div class="w-2 h-2 rounded-full bg-red-500/70"></div>
+                        <div class="w-2 h-2 rounded-full bg-amber-400/70"></div>
+                        <div class="w-2 h-2 rounded-full bg-emerald-400/70"></div>
+                        <span class="text-[8px] text-slate-500 font-mono ml-1">terminal</span>
+                    </div>
+                    <div class="font-mono text-[9px] space-y-1">
+                        <div><span class="text-emerald-400">$</span> <span class="text-slate-300">flutter build apk</span></div>
+                        <div class="text-slate-500">Building with sound null safety...</div>
+                        <div class="text-emerald-400">✓ Built build/app-release.apk</div>
+                        <div><span class="text-emerald-400">$</span> <span class="text-slate-400 typing-cursor"></span></div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-4 -right-4 bg-white dark:bg-surface-700 rounded-2xl p-5 shadow-2xl border border-gray-100 dark:border-surface-600 z-10">
+                    <div class="text-3xl font-display font-bold gradient-text">5+</div>
+                    <div class="text-xs text-slate-600 dark:text-gray-400 font-medium">Years of<br>Excellence</div>
                 </div>
             </div>
             <div>
@@ -599,7 +716,244 @@ text-secondary-600 dark:text-secondary-400 text-teal-600 dark:text-teal-400 text
 </section>
 
 {{-- ═══════════════════════════════════════════════════════════════ --}}
-{{-- 10. PRICING                                                    --}}
+{{-- 10. TESTIMONIALS                                               --}}
+{{-- ═══════════════════════════════════════════════════════════════ --}}
+<section id="testimonials" class="section-padding bg-white dark:bg-surface-900 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-primary-100/30 dark:bg-primary-900/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <div class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 text-sm font-semibold uppercase tracking-wider mb-4" data-reveal>
+                <span class="w-8 h-[2px] bg-primary-500"></span> Testimonials <span class="w-8 h-[2px] bg-primary-500"></span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-slate-900 dark:text-white mb-6" data-reveal>
+                What Our <span class="gradient-text">Clients Say</span>
+            </h2>
+            <p class="text-lg text-slate-600 dark:text-gray-400" data-reveal>
+                Don't just take our word for it. Here's what our clients have to say about working with Ehsan Developers.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach([
+                [
+                    'name' => 'James Mwangi',
+                    'title' => 'CEO',
+                    'company' => 'SwiftLogistics Kenya',
+                    'initials' => 'JM',
+                    'color' => 'from-primary-500 to-teal-500',
+                    'stars' => 5,
+                    'quote' => 'Ehsan Developers transformed our logistics operations with a custom fleet management system. The team was responsive, professional, and delivered ahead of schedule. Our efficiency improved by 40% within the first quarter.',
+                ],
+                [
+                    'name' => 'Amina Hassan',
+                    'title' => 'Founder',
+                    'company' => 'NairobiEats',
+                    'initials' => 'AH',
+                    'color' => 'from-teal-500 to-cyan-500',
+                    'stars' => 5,
+                    'quote' => 'They built our food delivery app from scratch — both iOS and Android. The quality of the UI/UX design exceeded our expectations. We went from concept to launch in just three months.',
+                ],
+                [
+                    'name' => 'David Ochieng',
+                    'title' => 'Operations Director',
+                    'company' => 'GreenField Farms',
+                    'initials' => 'DO',
+                    'color' => 'from-secondary-500 to-orange-500',
+                    'stars' => 5,
+                    'quote' => 'The inventory management system they developed for our agricultural supply chain has been a game-changer. Real-time tracking, automated reports, and excellent post-launch support.',
+                ],
+                [
+                    'name' => 'Sarah Kimani',
+                    'title' => 'Marketing Manager',
+                    'company' => 'Horizon Realty',
+                    'initials' => 'SK',
+                    'color' => 'from-purple-500 to-pink-500',
+                    'stars' => 5,
+                    'quote' => 'Our new website and CRM system have completely streamlined how we manage property listings and client relationships. The team truly understood our business needs from day one.',
+                ],
+                [
+                    'name' => 'Michael Otieno',
+                    'title' => 'CTO',
+                    'company' => 'PaySwift Solutions',
+                    'initials' => 'MO',
+                    'color' => 'from-primary-600 to-blue-500',
+                    'stars' => 5,
+                    'quote' => 'We needed a fintech platform that could handle high transaction volumes securely. Ehsan Developers delivered a robust, scalable solution with excellent security practices. Highly recommended.',
+                ],
+                [
+                    'name' => 'Fatuma Ali',
+                    'title' => 'Director',
+                    'company' => 'EduBridge Academy',
+                    'initials' => 'FA',
+                    'color' => 'from-emerald-500 to-teal-500',
+                    'stars' => 5,
+                    'quote' => 'The e-learning platform they built handles thousands of students seamlessly. The admin dashboard is intuitive and the mobile app works flawlessly. Outstanding work and ongoing support.',
+                ],
+            ] as $testimonial)
+            <div class="glass-card rounded-2xl p-8 flex flex-col" data-reveal>
+                <!-- Stars -->
+                <div class="flex gap-1 mb-4">
+                    @for($s = 0; $s < $testimonial['stars']; $s++)
+                    <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    @endfor
+                </div>
+                <!-- Quote -->
+                <p class="text-slate-600 dark:text-gray-400 leading-relaxed mb-6 flex-1">"{{ $testimonial['quote'] }}"</p>
+                <!-- Author -->
+                <div class="flex items-center gap-4 pt-4 border-t border-slate-100 dark:border-surface-600">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br {{ $testimonial['color'] }} flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-bold text-sm">{{ $testimonial['initials'] }}</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-display font-bold text-slate-800 dark:text-white">{{ $testimonial['name'] }}</h4>
+                        <p class="text-xs text-slate-500 dark:text-gray-500">{{ $testimonial['title'] }}, {{ $testimonial['company'] }}</p>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- ═══════════════════════════════════════════════════════════════ --}}
+{{-- 11. CASE STUDIES                                               --}}
+{{-- ═══════════════════════════════════════════════════════════════ --}}
+<section id="case-studies" class="section-padding bg-slate-50 dark:bg-surface-800 relative overflow-hidden">
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-teal-100/30 dark:bg-teal-900/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <div class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 text-sm font-semibold uppercase tracking-wider mb-4" data-reveal>
+                <span class="w-8 h-[2px] bg-primary-500"></span> Case Studies <span class="w-8 h-[2px] bg-primary-500"></span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-slate-900 dark:text-white mb-6" data-reveal>
+                Real Results for <span class="gradient-text">Real Businesses</span>
+            </h2>
+            <p class="text-lg text-slate-600 dark:text-gray-400" data-reveal>
+                See how we've helped businesses across East Africa transform their operations and accelerate growth.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{-- Case Study 1: SwiftLogistics --}}
+            <div class="glass-card rounded-2xl overflow-hidden group" data-reveal>
+                <div class="p-8">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-400 mb-4">
+                        Logistics & Fleet Management
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-slate-900 dark:text-white mb-2">SwiftLogistics Kenya</h3>
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-500 dark:text-gray-500 uppercase tracking-wider mb-1">Challenge</h4>
+                            <p class="text-sm text-slate-600 dark:text-gray-400">Manual fleet tracking causing delivery delays, lost packages, and zero real-time visibility across 50+ vehicles.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-500 dark:text-gray-500 uppercase tracking-wider mb-1">Solution</h4>
+                            <p class="text-sm text-slate-600 dark:text-gray-400">Custom fleet management system with GPS tracking, automated dispatch, and real-time analytics dashboard.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-end gap-2 mb-4">
+                        <span class="text-4xl font-display font-bold gradient-text">40%</span>
+                        <span class="text-sm text-slate-500 dark:text-gray-500 pb-1">faster deliveries</span>
+                    </div>
+                    <a href="{{ url('/portfolio') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:gap-3 transition-all">
+                        View Full Story
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            {{-- Case Study 2: NairobiEats --}}
+            <div class="glass-card rounded-2xl overflow-hidden group" data-reveal>
+                <div class="p-8">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-400 mb-4">
+                        Food Delivery & E-Commerce
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-slate-900 dark:text-white mb-2">NairobiEats</h3>
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-500 dark:text-gray-500 uppercase tracking-wider mb-1">Challenge</h4>
+                            <p class="text-sm text-slate-600 dark:text-gray-400">No digital presence — relying on phone orders and manual coordination with restaurant partners and riders.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-500 dark:text-gray-500 uppercase tracking-wider mb-1">Solution</h4>
+                            <p class="text-sm text-slate-600 dark:text-gray-400">Full-stack food delivery platform with iOS/Android apps, restaurant dashboard, and rider tracking system.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-end gap-2 mb-4">
+                        <span class="text-4xl font-display font-bold gradient-text">3x</span>
+                        <span class="text-sm text-slate-500 dark:text-gray-500 pb-1">revenue in 6 months</span>
+                    </div>
+                    <a href="{{ url('/portfolio') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:gap-3 transition-all">
+                        View Full Story
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            {{-- Case Study 3: GreenField Farms --}}
+            <div class="glass-card rounded-2xl overflow-hidden group" data-reveal>
+                <div class="p-8">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 mb-4">
+                        Agriculture & Supply Chain
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-slate-900 dark:text-white mb-2">GreenField Farms</h3>
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-500 dark:text-gray-500 uppercase tracking-wider mb-1">Challenge</h4>
+                            <p class="text-sm text-slate-600 dark:text-gray-400">Spreadsheet-based inventory causing stock mismatches, delayed procurement, and 15% product wastage annually.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-500 dark:text-gray-500 uppercase tracking-wider mb-1">Solution</h4>
+                            <p class="text-sm text-slate-600 dark:text-gray-400">Custom inventory management system with real-time tracking, automated reorder alerts, and supplier integration.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-end gap-2 mb-4">
+                        <span class="text-4xl font-display font-bold gradient-text">60%</span>
+                        <span class="text-sm text-slate-500 dark:text-gray-500 pb-1">less product waste</span>
+                    </div>
+                    <a href="{{ url('/portfolio') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:gap-3 transition-all">
+                        View Full Story
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ═══════════════════════════════════════════════════════════════ --}}
+{{-- 12. FREE CONSULTATION CTA                                      --}}
+{{-- ═══════════════════════════════════════════════════════════════ --}}
+@php
+    $ctaPhone = preg_replace('/\D/', '', \App\Models\PageContent::getValue('contact', 'phone', '+256 707 208954'));
+@endphp
+<section class="py-20 bg-gradient-to-r from-primary-900 via-teal-800 to-primary-900 dark:from-surface-800 dark:via-teal-900/50 dark:to-surface-800 relative overflow-hidden">
+    <div class="absolute inset-0">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-4xl mx-auto text-center relative z-10 px-4">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-6" data-reveal>
+            Ready to Transform Your Business?
+        </h2>
+        <p class="text-lg text-primary-100/80 mb-10 max-w-2xl mx-auto" data-reveal>
+            Book a free consultation with our experts. We'll analyze your needs and propose a tailored digital solution — no strings attached.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-reveal>
+            <a href="{{ url('/request-service') }}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-900 font-display font-bold rounded-full hover:bg-primary-50 hover:shadow-xl hover:shadow-white/10 transition-all duration-300 group">
+                Book Free Consultation
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="https://wa.me/{{ $ctaPhone }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-white/30 text-white font-display font-bold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Chat on WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+{{-- ═══════════════════════════════════════════════════════════════ --}}
+{{-- 13. PRICING                                                    --}}
 {{-- ═══════════════════════════════════════════════════════════════ --}}
 <section class="section-padding bg-white dark:bg-surface-900 relative overflow-hidden">
     <div class="absolute top-0 left-0 w-96 h-96 bg-secondary-100/30 dark:bg-secondary-900/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>

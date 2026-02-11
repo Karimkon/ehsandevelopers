@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
+use App\Http\Controllers\Admin\TrustedClientController;
 use App\Http\Controllers\BlogController as PublicBlogController;
 use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,10 @@ Route::get('/services/{service}', [PublicServiceController::class, 'show'])->nam
 Route::get('/request-service', [ServiceRequestController::class, 'create'])->name('service-request.create');
 Route::post('/request-service', [ServiceRequestController::class, 'store'])->name('service-request.store');
 Route::get('/request-service/confirmation/{referenceNumber}', [ServiceRequestController::class, 'confirmation'])->name('service-request.confirmation');
+
+Route::get('/faq', fn() => view('site.faq'))->name('faq');
+Route::get('/privacy-policy', fn() => view('site.privacy-policy'))->name('privacy-policy');
+Route::get('/terms-of-service', fn() => view('site.terms-of-service'))->name('terms-of-service');
 
 // Admin routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -66,6 +71,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Portfolio
     Route::resource('portfolio', AdminPortfolioController::class);
+
+    // Trusted Clients
+    Route::resource('trusted-clients', TrustedClientController::class);
 
     // Activity Logs
     Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');

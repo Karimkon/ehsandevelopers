@@ -31,6 +31,18 @@
         }
     </script>
 
+    <!-- Google Analytics 4 -->
+    @php $ga4Id = \App\Models\Setting::get('ga4_measurement_id'); @endphp
+    @if($ga4Id)
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $ga4Id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ $ga4Id }}');
+    </script>
+    @endif
+
     <link rel="stylesheet" href="/css/app.css">
     <link rel="modulepreload" href="/js/module.esm.js">
     <script type="module" src="/js/app.js"></script>
@@ -43,5 +55,6 @@
     </main>
 
     @include('site.partials.footer')
+
 </body>
 </html>
